@@ -38,13 +38,6 @@ const pizzaData = [
     photoName: "pizzas/salamino.jpg",
     soldOut: true,
   },
-  {
-    name: "Pizza Prosciutto",
-    ingredients: "Tomato, mozarella, ham, aragula, and burrata cheese",
-    price: 18,
-    photoName: "pizzas/prosciutto.jpg",
-    soldOut: false,
-  },
 ];
 
 function App() {
