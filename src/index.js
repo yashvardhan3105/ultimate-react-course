@@ -1,69 +1,127 @@
-import { StrictMode } from "react";
-import { createRoot } from "react-dom/client";
+import React from "react";
+import ReactDOM from "react-dom/client";
 import "./index.css";
+
+const pizzaData = [
+  {
+    name: "Focaccia",
+    ingredients: "Bread with italian olive oil and rosemary",
+    price: 6,
+    photoName: "pizzas/focaccia.jpg",
+    soldOut: false,
+  },
+  {
+    name: "Pizza Margherita",
+    ingredients: "Tomato and mozarella",
+    price: 10,
+    photoName: "pizzas/margherita.jpg",
+    soldOut: false,
+  },
+  {
+    name: "Pizza Spinaci",
+    ingredients: "Tomato, mozarella, spinach, and ricotta cheese",
+    price: 12,
+    photoName: "pizzas/spinaci.jpg",
+    soldOut: false,
+  },
+  {
+    name: "Pizza Funghi",
+    ingredients: "Tomato, mozarella, mushrooms, and onion",
+    price: 12,
+    photoName: "pizzas/funghi.jpg",
+    soldOut: false,
+  },
+  {
+    name: "Pizza Salamino",
+    ingredients: "Tomato, mozarella, and pepperoni",
+    price: 15,
+    photoName: "pizzas/salamino.jpg",
+    soldOut: true,
+  },
+  {
+    name: "Pizza Prosciutto",
+    ingredients: "Tomato, mozarella, ham, aragula, and burrata cheese",
+    price: 18,
+    photoName: "pizzas/prosciutto.jpg",
+    soldOut: false,
+  },
+];
 
 function App() {
   return (
-    <div className="card">
-      <Avatar />
-      <div className="data">
-        <Intro />
-        {/* Should contain one Skill component
-        for each web dev skill that you have,
-        customized with props */}
-        <SkillList />
+    <div className="container">
+      <Header />
+      <Menu />
+      <Footer />
+    </div>
+  );
+}
+
+function Header() {
+  // const styles = {color: "red", fontSize: "48px", textTransform: "uppercase" };
+  const style = {};
+  return (
+    // <h1 style={{ color: "red", fontSize: "48px", textTransform: "uppercase" }}>
+    //   Fast React Pizza Co.
+    // </h1>
+    <header className="header">
+      <h1 style={style}>Fast React Pizza Co.</h1>
+    </header>
+  );
+}
+
+function Menu() {
+  return (
+    <main className="menu">
+      <div className="menu">
+        <h2>Our Menu</h2>
+        <ul className="pizzas">
+          {pizzaData.map((pizza) => (
+            <Pizza pizzaObj={pizza} key={pizza.name} />
+          ))}
+        </ul>
       </div>
-    </div>
+    </main>
   );
 }
 
-function Avatar() {
+function Pizza(props) {
+  console.log(props);
   return (
-    <img
-      className="avatar"
-      src="https://i.pravatar.cc/150?img=3"
-      alt="Jonas Schmedtmann"
-    />
+    <li className="pizza">
+      <img src={props.pizzaObj.photoName} alt={props.pizzaObj.photoName} />
+      <div>
+        <h3>{props.pizzaObj.name}</h3>
+        <p>{props.pizzaObj.ingredients}</p>
+        <span>${props.pizzaObj.price}</span>
+      </div>
+    </li>
   );
 }
 
-function Intro() {
+function Footer() {
+  const hour = new Date().getHours();
+  const openHour = 12;
+  const closeHour = 22;
+  const isOpen = hour >= openHour && hour <= closeHour;
+  console.log(isOpen);
+  // if (hour >= openHour && hour <= closeHour) {
+  //   alert("We're currently open");
+  // } else {
+  //   alert("We're currently closed");
+  // }
   return (
-    <div>
-      <h1>Jonas Schmedtmann</h1>
-      <p>
-        Full-stack web developer and teacher at Udemy. When not coding or
-        preparing a course, I like to play board games, to cook (and eat), or to
-        just enjoy the Portuguese sun at the beach.
-      </p>
-    </div>
+    <footer className="footer">
+      {new Date().toLocaleDateString()} We're currently open
+    </footer>
   );
+
+  // return React.createElement("footer", null, "© 2021 Fast React Pizza Co.");
 }
 
-function SkillList() {
-  return (
-    <div className="skill-list">
-      <Skill name="React" emoji="💪" color="blue" />
-      <Skill name="HTML+CSS" emoji="💪" color="red" />
-      <Skill name="JavaScript" emoji="💪" color="yellow" />
-    </div>
-  );
-}
-
-function Skill(props) {
-  return (
-    <div className="skill" style={{ backgroundColor: props.color }}>
-      <span>{props.name}</span>
-      <span>{props.emoji}</span>
-    </div>
-  );
-}
-
-const rootElement = document.getElementById("root");
-const root = createRoot(rootElement);
-
+const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <StrictMode>
+  <React.StrictMode>
     <App />
-  </StrictMode>
+  </React.StrictMode>
 );
