@@ -47,6 +47,8 @@ const pizzaData = [
   },
 ];
 
+const numPizzas = pizzaData.length;
+
 function App() {
   return (
     <div className="container">
@@ -73,12 +75,11 @@ function Header() {
 function Menu() {
   const pizzas = pizzaData;
   // const pizzas = [];
-  const numPizzas = pizzaData.length;
   return (
     <main className="menu">
       <div className="menu">
         <h2>Our Menu</h2>
-        {numPizzas > 0 ? (
+        {numPizzas >= 0 ? (
           <>
             <p>
               Authentic Italian pizza made with love. Choose your favorite
@@ -109,15 +110,15 @@ function Menu() {
 function Pizza({ pizzaObj }) {
   console.log();
 
-  if (pizzaObj.soldOut) return null;
+  // if (pizzaObj.soldOut) return null;
 
   return (
-    <li className="pizza">
+    <li className={`pizza ${pizzaObj.soldOut ? "sold-out" : ""}`}>
       <img src={pizzaObj.photoName} alt={pizzaObj.photoName} />
       <div>
         <h3>{pizzaObj.name}</h3>
         <p>{pizzaObj.ingredients}</p>
-        <span>${pizzaObj.price}</span>
+        <span>{pizzaObj.soldOut ? "SOLD OUT" : pizzaObj.price}</span>
       </div>
     </li>
   );
@@ -150,10 +151,16 @@ function Footer() {
   function Order({ closeHour, openHour }) {
     return (
       <div className="order">
-        <p>
-          We're open from {openHour}:00 to {closeHour}:00. Come visit us.
-        </p>
-        <button className="btn">Order</button>
+        {numPizzas > 0 ? (
+          <>
+            <p>
+              We're open from {openHour}:00 to {closeHour}:00. Come visit us.
+            </p>
+            <button className="btn">Order</button>
+          </>
+        ) : (
+          ""
+        )}
       </div>
     );
   }
